@@ -1,0 +1,10 @@
+import 'package:mobileapp/features/domain/entities/category.dart';
+import 'package:mobileapp/features/domain/repositories/category_repository.dart';
+
+class CreateCategory {
+  final CategoryRepository repository;
+  CreateCategory(this.repository);
+  Future<void> call(Category category) {
+    return repository.createCategory(category);
+  }
+}
