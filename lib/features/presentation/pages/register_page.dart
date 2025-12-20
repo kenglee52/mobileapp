@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapp/features/domain/entities/customer.dart';
+import 'package:mobileapp/features/presentation/viewmodels/customer_view_model.dart';
+import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController telController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.watch<CustomerViewModel>();
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF009688), // teal
-              Color(0xFF4DB6AC), // light teal
-            ],
+            colors: [Color(0xFF009688), Color(0xFF4DB6AC)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -47,13 +49,13 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const Icon(
-                    Icons.lock_outline,
+                    Icons.person_add_alt_1,
                     size: 70,
                     color: Color(0xFF009688),
                   ),
                   const SizedBox(height: 16),
                   const Text(
-                    "ເຂົ້າສູ່ລະບົບ",
+                    "ລົງທະບຽນ",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -61,6 +63,18 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 24),
+                  // Name
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      labelText: "ຊື່",
+                      prefixIcon: const Icon(Icons.person),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
 
                   // Tel
                   TextField(
@@ -90,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Login Button
+                  // Register Button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -101,17 +115,38 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        // TODO: Login logic
+                      onPressed: () async {
+                        await vm.addCustomer(
+                          Customer(
+                            customerID: null,
+                            customerName: nameController.text,
+                            customerTel: telController.text,
+                            customerPassword: passwordController.text,
+                          ),
+                        );
+                        // if(createSuccess){}
                       },
                       child: const Text(
-                        "ເຂົ້າສູ່ລະບົບ",
+                        "ລົງທະບຽນ",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Back to login
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "ມີບັນຊີແລ້ວ? ເຂົ້າສູ່ລະບົບ",
+                      style: TextStyle(color: Color(0xFF009688)),
                     ),
                   ),
                 ],

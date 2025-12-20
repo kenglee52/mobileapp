@@ -1,5 +1,5 @@
 class Customer {
-  final int customerID;
+  final int? customerID;
   final String customerName;
   final String customerTel;
   final String customerPassword;

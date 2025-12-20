@@ -5,7 +5,7 @@ import 'package:mobileapp/features/data/models/customer_model.dart';
 import 'package:http/http.dart' as http;
 
 class CustomerRemoteDatasource {
-  final String url = Api.baseUrl + "customer";
+  final String url = Api.baseUrl + "/customer";
   Future<List<CustomerModel>> getCustomers() async {
     try {
       final response = await http.get(Uri.parse(url));
