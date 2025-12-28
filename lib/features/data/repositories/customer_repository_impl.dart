@@ -12,12 +12,14 @@ class CustomerRepositoryImpl implements CustomerRepository {
 
   @override
   Future<void> createCustomer(Customer customer) {
-    return remote.createCustomer(customer as CustomerModel);
+    final model = CustomerModel.fromEntity(customer);
+    return remote.createCustomer(model);
   }
 
   @override
   Future<void> updateCustomer(Customer customer) {
-    return remote.updateCustomer(customer as CustomerModel);
+    final model = CustomerModel.fromEntity(customer);
+    return remote.updateCustomer(model);
   }
 
   @override

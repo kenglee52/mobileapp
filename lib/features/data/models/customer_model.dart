@@ -7,6 +7,15 @@ class CustomerModel extends Customer {
     required super.customerTel,
     required super.customerPassword,
   });
+  
+  factory CustomerModel.fromEntity(Customer customer) {
+    return CustomerModel(
+      customerID: customer.customerID,
+      customerName: customer.customerName,
+      customerTel: customer.customerTel,
+      customerPassword: customer.customerPassword,
+    );
+  }
 
   factory CustomerModel.fromJson(Map<String, dynamic> json) {
     return CustomerModel(

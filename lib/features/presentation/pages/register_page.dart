@@ -124,7 +124,6 @@ class _RegisterPageState extends State<RegisterPage> {
                             customerPassword: passwordController.text,
                           ),
                         );
-                        // if(createSuccess){}
                       },
                       child: const Text(
                         "ລົງທະບຽນ",
