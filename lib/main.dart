@@ -6,24 +6,29 @@ import 'package:mobileapp/features/domain/usecases/customer/delete_customer.dart
 import 'package:mobileapp/features/domain/usecases/customer/get_customer_by_id.dart';
 import 'package:mobileapp/features/domain/usecases/customer/get_customers.dart';
 import 'package:mobileapp/features/domain/usecases/customer/update_customer.dart';
-import 'package:mobileapp/features/presentation/pages/register_page.dart';
+import 'package:mobileapp/features/presentation/pages/login_page.dart';
 import 'package:mobileapp/features/presentation/viewmodels/customer_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  final remote = CustomerRemoteDatasource();
-  final repo = CustomerRepositoryImpl(remote);
+  final customerRemote = CustomerRemoteDatasource();
+  final customerRepo = CustomerRepositoryImpl(customerRemote);
+
   runApp(
-    ChangeNotifierProvider(
-      create:
-          (context) => CustomerViewModel(
-            getCustomersUsecase: GetCustomers(repo),
-            createCustomerUsecase: CreateCustomer(repo),
-            updateCustomerUsecase: UpdateCustomer(repo),
-            deleteCustomerUsecase: DeleteCustomer(repo),
-            getCustomerByIdUsecase: GetCustomerById(repo),
-          )..loadCustomers(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create:
+              (_) => CustomerViewModel(
+                getCustomersUsecase: GetCustomers(customerRepo),
+                createCustomerUsecase: CreateCustomer(customerRepo),
+                updateCustomerUsecase: UpdateCustomer(customerRepo),
+                deleteCustomerUsecase: DeleteCustomer(customerRepo),
+                getCustomerByIdUsecase: GetCustomerById(customerRepo),
+              )..loadCustomers(),
+        ),
+      ],
+      child: const MyApp(), 
     ),
   );
 }
@@ -36,7 +41,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
-      home: const RegisterPage(),
+      home: const LoginPage(),
     );
   }
 }

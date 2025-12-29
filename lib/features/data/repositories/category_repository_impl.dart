@@ -12,12 +12,14 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<void> createCategory(Category category) {
-    return remote.createCategory(category as CategoryModel);
+    final model = CategoryModel.fromEntity(category);
+    return remote.createCategory(model);
   }
 
   @override
   Future<void> updateCategory(Category category) {
-    return remote.updateCategory(category as CategoryModel);
+    final model = CategoryModel.fromEntity(category);
+    return remote.updateCategory(model);
   }
 
   @override

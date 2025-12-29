@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:mobileapp/core/config/Api.dart';
 import 'package:mobileapp/features/data/models/customer_model.dart';
 import 'package:http/http.dart' as http;
