@@ -16,8 +16,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     final vm = context.watch<CustomerViewModel>();
+   
     return Scaffold(
       body: Container(
         width: double.infinity,

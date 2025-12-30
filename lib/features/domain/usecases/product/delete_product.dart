@@ -1,0 +1,9 @@
+import 'package:mobileapp/features/domain/repositories/product_repository.dart';
+
+class DeleteProduct {
+  final ProductRepository repository;
+  DeleteProduct(this.repository);
+  Future<void> call(int id) {
+    return repository.deleteProduct(id);
+  }
+}

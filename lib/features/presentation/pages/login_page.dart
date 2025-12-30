@@ -29,9 +29,12 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
 
       if (response.statusCode == 200) {
+        final data = await jsonDecode(response.body);
+        int id = data["data"]["customerID"];
+        print(id);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(builder: (context) => HomePage(userID: id)),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
