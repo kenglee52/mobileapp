@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapp/controllers/add_to_cart.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final int id;
@@ -59,7 +60,16 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               borderRadius: BorderRadius.circular(14),
             ),
           ),
-          onPressed: () {},
+          onPressed: () {
+            AddToCart.addProduct(
+              widget.id,
+              widget.name,
+              widget.price,
+              quntity,
+              total,
+              widget.image,
+            );
+          },
           child: Container(
             height: 35,
             child: Row(
