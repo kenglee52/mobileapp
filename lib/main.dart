@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapp/features/data/datasources/bill_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/category_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/customer_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/product_remote_datasource.dart';
+import 'package:mobileapp/features/data/repositories/bill_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/category_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/customer_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/product_repository_impl.dart';
+import 'package:mobileapp/features/domain/usecases/bill/create_bill.dart';
+import 'package:mobileapp/features/domain/usecases/bill/delete_bill.dart';
+import 'package:mobileapp/features/domain/usecases/bill/get_bill_by_id.dart';
+import 'package:mobileapp/features/domain/usecases/bill/get_bills.dart';
+import 'package:mobileapp/features/domain/usecases/bill/update_bill.dart';
 import 'package:mobileapp/features/domain/usecases/category/create_category.dart';
 import 'package:mobileapp/features/domain/usecases/category/delete_category.dart';
 import 'package:mobileapp/features/domain/usecases/category/get_categories.dart';
@@ -21,6 +28,7 @@ import 'package:mobileapp/features/domain/usecases/product/get_product_by_id.dar
 import 'package:mobileapp/features/domain/usecases/product/get_products.dart';
 import 'package:mobileapp/features/domain/usecases/product/update_product.dart';
 import 'package:mobileapp/features/presentation/pages/login_page.dart';
+import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/category_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/customer_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
@@ -35,6 +43,9 @@ void main() {
 
   final productRemote = ProductRemoteDatasource();
   final productRepo = ProductRepositoryImpl(productRemote);
+
+  final billRemote = BillRemoteDatasource();
+  final billRepo = BillRepositoryImpl(billRemote);
 
   runApp(
     MultiProvider(
@@ -68,6 +79,16 @@ void main() {
                 deleteProductUsecase: DeleteProduct(productRepo),
                 getProductByIdUsecase: GetProductById(productRepo),
               )..loadProducts(),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (_) => BillViewModel(
+                getBillsUsecase: GetBills(billRepo),
+                createBillUsecase: CreateBill(billRepo),
+                updateBillUsecase: UpdateBill(billRepo),
+                deleteBillUsecase: DeleteBill(billRepo),
+                getBillByIdUsecase: GetBillById(billRepo),
+              ),
         ),
       ],
       child: const MyApp(),
