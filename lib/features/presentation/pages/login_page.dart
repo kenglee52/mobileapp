@@ -15,7 +15,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _telController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _EyeOpen = true;
+  bool _eyeOpen = true;
+
   Future<void> login(String tel, String password) async {
     final String url = Api.baseUrl + "/customer-login";
 
@@ -29,172 +30,181 @@ class _LoginPageState extends State<LoginPage> {
       if (!mounted) return;
 
       if (response.statusCode == 200) {
-        final data = await jsonDecode(response.body);
+        final data = jsonDecode(response.body);
         int id = data["data"]["customerID"];
-        print(id);
+
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage(userID: id)),
+          MaterialPageRoute(builder: (_) => HomePage(userID: id)),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("ເບີໂທ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ"),
-            backgroundColor: Colors.red,
-          ),
-        );
+        _showError("ເບີໂທ ຫຼື ລະຫັດຜ່ານບໍ່ຖືກຕ້ອງ");
       }
     } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("ເກີດຂໍ້ຜິດພາດ: $e"),
-          backgroundColor: Colors.red,
-        ),
-      );
+      _showError("ເກີດຂໍ້ຜິດພາດ");
     }
+  }
+
+  void _showError(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg), backgroundColor: Colors.redAccent),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Card(
-              elevation: 35,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Logo / Title
-                    Icon(
-                      Icons.shopping_cart,
-                      size: 60,
-                      color: Colors.grey.shade800,
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "LAO SHOP",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      "Login to your account",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-
-                    const SizedBox(height: 30),
-
-                    // Tel
-                    TextField(
-                      controller: _telController,
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        labelText: "ເບີໂທ",
-                        prefixIcon: Icon(Icons.phone),
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.black),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.grey.shade800, Colors.grey.shade900],
+          ),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Card(
+                elevation: 30,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(28),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      /// 🛒 Logo
+                      CircleAvatar(
+                        radius: 35,
+                        backgroundColor: Colors.orange.shade600,
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          size: 36,
+                          color: Colors.white,
                         ),
                       ),
-                    ),
 
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 16),
 
-                    // Password
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: _EyeOpen,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _EyeOpen = !_EyeOpen;
-                            });
-                          },
-                          icon: Icon(
-                            _EyeOpen ? Icons.visibility_off : Icons.visibility,
+                      const Text(
+                        "LAO SHOP",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        "ເຂົ້າສູ່ລະບົບເພື່ອຊື້ສິນຄ້າ",
+                        style: TextStyle(color: Colors.grey.shade600),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      /// 📞 Tel
+                      TextField(
+                        controller: _telController,
+                        keyboardType: TextInputType.phone,
+                        decoration: InputDecoration(
+                          labelText: "ເບີໂທ",
+                          prefixIcon: Icon(
+                            Icons.phone,
+                            color: Colors.orange.shade600,
                           ),
-                        ),
-                        labelText: "ລະຫັດຜ່ານ",
-                        prefixIcon: Icon(Icons.lock),
-                        filled: true,
-                        fillColor: Colors.grey.shade100,
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide(color: Colors.black),
-                        ),
-                      ),
-                    ),
-
-                    const SizedBox(height: 25),
-
-                    // Login Button
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade800,
-                          shape: RoundedRectangleBorder(
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Colors.black),
                           ),
                         ),
-                        onPressed: () {
-                          login(_telController.text, _passwordController.text);
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Icons.login,
-                              size: 20,
+                      ),
+
+                      const SizedBox(height: 18),
+
+                      /// 🔐 Password
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: _eyeOpen,
+                        decoration: InputDecoration(
+                          labelText: "ລະຫັດຜ່ານ",
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: Colors.orange.shade600,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _eyeOpen
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() => _eyeOpen = !_eyeOpen);
+                            },
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 28),
+
+                      /// 🔘 Login Button
+                      SizedBox(
+                        width: double.infinity,
+                        height: 52,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.orange.shade600,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          onPressed: () {
+                            login(
+                              _telController.text,
+                              _passwordController.text,
+                            );
+                          },
+                          child: const Text(
+                            "ເຂົ້າສູ່ລະບົບ",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
-                            const SizedBox(width: 5),
-                            const Text(
-                              "ເຂົ້າສູ່ລະບົບ",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
 
-                    const SizedBox(height: 15),
+                      const SizedBox(height: 18),
 
-                    // Register
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RegisterPage(),
+                      /// 📝 Register
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RegisterPage()),
+                          );
+                        },
+                        child: Text(
+                          "ຍັງບໍ່ມີບັນຊີ? ລົງທະບຽນ",
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontWeight: FontWeight.w500,
                           ),
-                        );
-                      },
-                      child: Text(
-                        "ຍັງບໍ່ມີບັນຊີ? ລົງທະບຽນ",
-                        style: TextStyle(color: Colors.blueGrey.shade800),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

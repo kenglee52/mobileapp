@@ -12,66 +12,111 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _seletedIndex = 0;
-  List<Widget> screens = [DashboardPage(), ProductPage(), FavoritePage()];
+  int _selectedIndex = 0;
+
+  final List<Widget> screens = const [
+    DashboardPage(),
+    ProductPage(),
+    FavoritePage(),
+  ];
+
   void tapMenu(int index) {
-    setState(() {
-      _seletedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey.shade100,
+
+      /// 🔝 AppBar
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+        elevation: 0,
+        backgroundColor: Colors.grey.shade800,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
+          "MyApp",
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
+          ),
+        ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.message)),
+          IconButton(
+            icon: Icon(Icons.message, color: Colors.white),
+            onPressed: () {},
+          ),
           PopupMenuButton(
-            itemBuilder:
-                (context) => [
-                  PopupMenuItem(
-                    child: ListTile(
-                      leading: Icon(Icons.logout),
-                      title: Text("ອອກຈາກລະບົບ"),
-                    ),
-                  ),
-                ],
+            icon: const Icon(Icons.more_vert, color: Colors.white),
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.logout, color: Colors.redAccent),
+                  title: const Text("ອອກຈາກລະບົບ"),
+                  onTap: () {},
+                ),
+              ),
+            ],
           ),
         ],
-        backgroundColor: Colors.grey.shade800,
-        title: Text(
-          "MyApp",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
       ),
-      body: screens[_seletedIndex],
+
+      /// 📄 Body
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        child: screens[_selectedIndex],
+      ),
+
+      /// 🛒 Floating Cart
       floatingActionButton: FloatingActionButton(
+        elevation: 8,
         backgroundColor: Colors.grey.shade800,
         onPressed: () {},
-        child: Icon(Icons.shopping_cart, color: Colors.white),
+        child: const Icon(Icons.shopping_cart, color: Colors.white),
       ),
+
+      /// ⬇ Bottom Navigation
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: Colors.grey.shade800,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(28),
+            topRight: Radius.circular(28),
           ),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          unselectedItemColor: Colors.white,
-          selectedItemColor: Colors.amber.shade300,
-          currentIndex: _seletedIndex,
-          onTap: (value) {
-            tapMenu(value);
-          },
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "ໜ້າຫຼັກ"),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: "ສິນຄ້າ"),
-            BottomNavigationBarItem(icon: Icon(Icons.favorite), label: "ສົນໃຈ"),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.black.withOpacity(0.25),
+            ),
           ],
+        ),
+        child: SizedBox(
+          height: 60,
+          child: BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            currentIndex: _selectedIndex,
+            onTap: tapMenu,
+            selectedItemColor: Colors.orange.shade300,
+            unselectedItemColor: Colors.white70,
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: "ໜ້າຫຼັກ",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.list_alt),
+                label: "ສິນຄ້າ",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite),
+                label: "ສົນໃຈ",
+              ),
+            ],
+          ),
         ),
       ),
     );
