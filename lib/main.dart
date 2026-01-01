@@ -126,7 +126,26 @@ class MyApp extends StatelessWidget {
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: "NotoSansLao"
+        fontFamily: "NotoSansLao",
+        primaryColor: Color(0xFFD32F2F),
+        primarySwatch: MaterialColor(0xFFD32F2F, {
+          50: Color(0xFFFFEBEE),
+          100: Color(0xFFFFCDD2),
+          200: Color(0xFFEF9A9A),
+          300: Color(0xFFE57373),
+          400: Color(0xFFEF5350),
+          500: Color(0xFFD32F2F),
+          600: Color(0xFFC62828),
+          700: Color(0xFFB71C1C),
+          800: Color(0xFFA1887F),
+          900: Color(0xFF7B1113),
+        }),
+        scaffoldBackgroundColor: Color(0xFFFAFAFA),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFFD32F2F),
+          elevation: 4,
+          shadowColor: Color(0xFFD32F2F).withOpacity(0.3),
+        ),
       ),
       home: const LoginPage(),
     );

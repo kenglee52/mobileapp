@@ -8,6 +8,8 @@ class ProductDetailPage extends StatefulWidget {
   final String unit;
   final String image;
   final int price;
+  final int stockQuatity;
+  final String decoration;
 
   const ProductDetailPage({
     super.key,
@@ -17,6 +19,8 @@ class ProductDetailPage extends StatefulWidget {
     required this.unit,
     required this.image,
     required this.price,
+    required this.stockQuatity,
+    required this.decoration,
   });
 
   @override
@@ -36,11 +40,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Colors.orange.shade600),
+        iconTheme: const IconThemeData(color: Color(0xFFD32F2F)),
       ),
       extendBodyBehindAppBar: true,
 
@@ -54,13 +58,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange.shade600,
+            backgroundColor: Color(0xFFD32F2F),
             padding: const EdgeInsets.symmetric(vertical: 14),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
+            elevation: 4,
           ),
           onPressed: () {
+            int checkQty = widget.stockQuatity - quntity;
+            if (checkQty <= 30) {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: const Text("ຈຳນວນສິນຄ້າບໍ່ພຽງພໍ"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("ຕົກລົງ"),
+                        ),
+                      ],
+                    ),
+              );
+              return;
+            }
             AddToCart.addProduct(
               widget.id,
               widget.name,
@@ -68,13 +92,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               quntity,
               total,
               widget.image,
+              widget.stockQuatity,
             );
           },
           child: Container(
-            height: 35,
+            height: 26,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(Icons.shopping_cart, size: 22, color: Colors.white),
                 SizedBox(width: 5),
                 Text(
@@ -132,6 +157,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Color(0xFF424242),
                     ),
                   ),
 
@@ -148,10 +174,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   /// Price
                   Text(
                     "${widget.price.toString()} ₭",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: Colors.orange.shade600,
+                      color: Color(0xFFD32F2F),
                     ),
                   ),
 
@@ -161,7 +187,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade800,
+                          backgroundColor: Color(0xFFD32F2F),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: () {
                           setState(() {
@@ -172,12 +201,21 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             total = widget.price * quntity;
                           });
                         },
-                        child: Icon(Icons.remove, color: Colors.white),
+                        child: const Icon(Icons.remove, color: Colors.white),
                       ),
-                      Text("ຈຳນວນ: ${quntity} ${widget.unit}"),
+                      Text(
+                        "ຈຳນວນ: ${quntity} ${widget.unit}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.grey.shade800,
+                          backgroundColor: Color(0xFFD32F2F),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                         onPressed: () {
                           setState(() {
@@ -185,7 +223,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                             total = widget.price * quntity;
                           });
                         },
-                        child: Icon(Icons.add, color: Colors.white),
+                        child: const Icon(Icons.add, color: Colors.white),
                       ),
                     ],
                   ),
@@ -196,10 +234,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       alignment: Alignment.centerRight,
                       child: Text(
                         "ລວມ: ${total} ກີບ",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color: Colors.black,
+                          color: Color(0xFFD32F2F),
                         ),
                       ),
                     ),
@@ -214,14 +252,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   /// Description
                   const Text(
                     "ລາຍລະອຽດສິນຄ້າ",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF424242),
+                    ),
                   ),
 
                   const SizedBox(height: 8),
 
                   Text(
-                    "ສິນຄ້າຄຸນນະພາບດີ ເໝາະສຳລັບການນຳໃຊ້ປະຈຳວັນ "
-                    "ຜະລິດຈາກວັດຖຸດິບທີ່ໄດ້ມາດຕະຖານ ແລະ ປອດໄພ.",
+                    "${widget.decoration}",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade700,

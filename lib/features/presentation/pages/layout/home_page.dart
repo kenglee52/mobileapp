@@ -29,34 +29,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-
+      backgroundColor: Color(0xFFFAFAFA),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(62),
         child: AppBar(
           elevation: 4,
-          backgroundColor: Colors.transparent,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.grey.shade900, Colors.grey.shade700],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-          ),
-          iconTheme: const IconThemeData(color: Colors.white),
+          backgroundColor: Color(0xFFD32F2F),
           title: const Text(
             "LAO SHOP",
             style: TextStyle(
@@ -79,10 +57,11 @@ class _HomePageState extends State<HomePage> {
                       child: ListTile(
                         leading: const Icon(
                           Icons.logout,
-                          color: Colors.redAccent,
+                          color: Color(0xFFD32F2F),
                         ),
                         title: const Text("ອອກຈາກລະບົບ"),
                         onTap: () {
+                          Navigator.pop(context);
                           Navigator.pop(context);
                           Navigator.push(
                             context,
@@ -104,7 +83,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         elevation: 8,
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Color(0xFFD32F2F),
         onPressed: () {
           Navigator.push(
             context,
@@ -119,17 +98,13 @@ class _HomePageState extends State<HomePage> {
       /// ⬇ Bottom Navigation
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.grey.shade900, Colors.grey.shade700],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          color: Colors.red,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(28),
-            topRight: Radius.circular(28),
+            topLeft: Radius.circular(22),
+            topRight: Radius.circular(22),
           ),
           boxShadow: [
-            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(0.25)),
+            BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(0.15)),
           ],
         ),
         child: SizedBox(
@@ -138,8 +113,8 @@ class _HomePageState extends State<HomePage> {
             elevation: 0,
             currentIndex: _selectedIndex,
             onTap: tapMenu,
-            selectedItemColor: Colors.orange.shade300,
-            unselectedItemColor: Colors.white70,
+            selectedItemColor: Colors.orange.shade200,
+            unselectedItemColor: Colors.white,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             items: const [

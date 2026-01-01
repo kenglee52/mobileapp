@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.grey.shade900, Colors.grey.shade700],
+            colors: [Color(0xFFD32F2F), Color(0xFFB71C1C)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.all(20),
               child: Card(
                 elevation: 30,
+                shadowColor: Color(0xFFD32F2F).withOpacity(0.4),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                 ),
@@ -79,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       /// 🛒 Logo
                       CircleAvatar(
                         radius: 35,
-                        backgroundColor: Colors.orange.shade600,
+                        backgroundColor: Color(0xFFD32F2F),
                         child: const Icon(
                           Icons.shopping_cart,
                           size: 36,
@@ -95,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1,
+                          color: Color(0xFFD32F2F),
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -113,13 +115,17 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "ເບີໂທ",
                           prefixIcon: Icon(
                             Icons.phone,
-                            color: Colors.orange.shade600,
+                            color: Color(0xFFD32F2F),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: Colors.grey.shade50,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F).withOpacity(0.3)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F), width: 2),
                           ),
                         ),
                       ),
@@ -134,23 +140,28 @@ class _LoginPageState extends State<LoginPage> {
                           labelText: "ລະຫັດຜ່ານ",
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Colors.orange.shade600,
+                            color: Color(0xFFD32F2F),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _eyeOpen
                                   ? Icons.visibility_off
                                   : Icons.visibility,
+                              color: Color(0xFFD32F2F),
                             ),
                             onPressed: () {
                               setState(() => _eyeOpen = !_eyeOpen);
                             },
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: Colors.grey.shade50,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F).withOpacity(0.3)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F), width: 2),
                           ),
                         ),
                       ),
@@ -163,7 +174,8 @@ class _LoginPageState extends State<LoginPage> {
                         height: 52,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange.shade600,
+                            backgroundColor: Color(0xFFD32F2F),
+                            elevation: 4,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -195,11 +207,11 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute(builder: (_) => RegisterPage()),
                           );
                         },
-                        child: Text(
+                        child: const Text(
                           "ຍັງບໍ່ມີບັນຊີ? ລົງທະບຽນ",
                           style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFD32F2F),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

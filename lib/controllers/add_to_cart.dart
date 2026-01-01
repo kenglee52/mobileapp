@@ -1,13 +1,14 @@
 class AddToCart {
   static List<Map<String, dynamic>> productCart = [];
-  static void addProduct(int id, String name, int price, int qty, int total, String image) {
+  static void addProduct(int id, String name, int price, int qty, int total, String image, int stock) {
     productCart.add({
       "id": id,
       "name": name,
       "price": price,
       "qty": qty,
       "total": total,
-      "image": image
+      "image": image,
+      "stock": stock
     });
     print(productCart);
   }

@@ -39,10 +39,11 @@ class _CartPageState extends State<CartPage> {
     final billVM = context.watch<BillViewModel>();
     final orderVM = context.watch<OrderViewModel>();
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade800,
+        backgroundColor: Color(0xFFD32F2F),
         iconTheme: const IconThemeData(color: Colors.white),
+        elevation: 4,
         title: const Text(
           "ກະຕ່າຂອງຂ້ອຍ",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
@@ -61,7 +62,7 @@ class _CartPageState extends State<CartPage> {
                         final item = cart[index];
 
                         return Card(
-                          elevation: 6,
+                          elevation: 2,
                           margin: const EdgeInsets.only(bottom: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16),
@@ -70,19 +71,14 @@ class _CartPageState extends State<CartPage> {
                             padding: const EdgeInsets.all(14),
                             child: Column(
                               children: [
-                                /// IMAGE + NAME + REMOVE
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    /// Product Image
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(12),
                                       child: _buildImage(item["image"]),
                                     ),
-
                                     const SizedBox(width: 12),
-
-                                    /// Product info
                                     Expanded(
                                       child: Column(
                                         crossAxisAlignment:
@@ -98,13 +94,15 @@ class _CartPageState extends State<CartPage> {
                                                   style: const TextStyle(
                                                     fontSize: 16,
                                                     fontWeight: FontWeight.bold,
+                                                    color: Color(0xFF424242),
                                                   ),
                                                 ),
                                               ),
                                               IconButton(
                                                 icon: const Icon(
                                                   Icons.close,
-                                                  color: Colors.red,
+                                                  color: Color(0xFFD32F2F),
+                                                  size: 22,
                                                 ),
                                                 onPressed:
                                                     () => _removeItem(index),
@@ -129,6 +127,7 @@ class _CartPageState extends State<CartPage> {
                                   "ລວມ",
                                   "${item["total"]} ກີບ",
                                   isBold: true,
+                                  color: Color(0xFFD32F2F),
                                 ),
                               ],
                             ),
@@ -163,10 +162,10 @@ class _CartPageState extends State<CartPage> {
                             SizedBox(height: 5),
                             Text(
                               "$sum ກີບ",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.orange.shade700,
+                                color: Color(0xFFD32F2F),
                               ),
                             ),
                           ],
@@ -189,9 +188,10 @@ class _CartPageState extends State<CartPage> {
                                   title: Center(
                                     child: Text(
                                       "ກະລຸນາໃສ່ຂໍ້ມູນ",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 18,
+                                        color: Color(0xFFD32F2F),
                                       ),
                                     ),
                                   ),
@@ -202,7 +202,6 @@ class _CartPageState extends State<CartPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        /// Dropdown ประเภทขนส่ง
                                         DropdownButtonFormField<String>(
                                           value: transportType,
                                           decoration: InputDecoration(
@@ -213,6 +212,7 @@ class _CartPageState extends State<CartPage> {
                                             ),
                                             prefixIcon: Icon(
                                               Icons.local_shipping,
+                                              color: Color(0xFFD32F2F),
                                             ),
                                           ),
                                           items: const [
@@ -242,7 +242,10 @@ class _CartPageState extends State<CartPage> {
                                               borderRadius:
                                                   BorderRadius.circular(12),
                                             ),
-                                            prefixIcon: Icon(Icons.store),
+                                            prefixIcon: Icon(
+                                              Icons.store,
+                                              color: Color(0xFFD32F2F),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -253,13 +256,14 @@ class _CartPageState extends State<CartPage> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "ຍົກເລີກ",
                                         style: TextStyle(color: Colors.grey),
                                       ),
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
+                                        backgroundColor: Color(0xFFD32F2F),
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(
                                             12,
@@ -290,9 +294,8 @@ class _CartPageState extends State<CartPage> {
                                               saleQty: item["qty"],
                                               total: item["total"],
                                             ),
-                                          );
+                                          );                            
                                         }
-
                                         setState(() {
                                           AddToCart.productCart = [];
                                           cart = AddToCart.productCart;
@@ -300,7 +303,7 @@ class _CartPageState extends State<CartPage> {
                                         });
                                         Navigator.pop(context);
                                       },
-                                      child: Text("ບັນທຶກ"),
+                                      child: const Text("ບັນທຶກ"),
                                     ),
                                   ],
                                 );
@@ -308,7 +311,7 @@ class _CartPageState extends State<CartPage> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.red.shade600,
+                            backgroundColor: Color(0xFFD32F2F),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 28,
                               vertical: 12,
@@ -316,12 +319,13 @@ class _CartPageState extends State<CartPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
+                            elevation: 4,
                           ),
                           child: Container(
-                            height: 35,
+                            height: 26,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: const [
                                 Icon(Icons.save, size: 20, color: Colors.white),
                                 SizedBox(width: 5),
                                 Text(
@@ -344,7 +348,6 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  /// IMAGE HANDLER (URL or Asset)
   Widget _buildImage(String image) {
     if (image.startsWith('http')) {
       return Image.network(
@@ -359,7 +362,7 @@ class _CartPageState extends State<CartPage> {
     }
   }
 
-  Widget _row(String title, String value, {bool isBold = false}) {
+  Widget _row(String title, String value, {bool isBold = false, Color? color}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Row(
@@ -370,6 +373,7 @@ class _CartPageState extends State<CartPage> {
             value,
             style: TextStyle(
               fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+              color: color,
             ),
           ),
         ],

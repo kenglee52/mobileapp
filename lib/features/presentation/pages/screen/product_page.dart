@@ -24,6 +24,7 @@ class _ProductPageState extends State<ProductPage> {
     ];
 
     return Scaffold(
+      backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
@@ -35,14 +36,22 @@ class _ProductPageState extends State<ProductPage> {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(14),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFD32F2F).withOpacity(0.1),
+                      blurRadius: 4,
+                    ),
+                  ],
                 ),
                 child: TextField(
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search, color: Colors.grey.shade800),
+                    prefixIcon: Icon(Icons.search, color: Color(0xFFD32F2F)),
                     hintText: "ຄົ້ນຫາສິນຄ້າ",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey.shade800),
+                      borderSide: BorderSide(
+                        color: Colors.red,
+                      ),
                     ),
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
                   ),
@@ -82,16 +91,19 @@ class _ProductPageState extends State<ProductPage> {
                                     color:
                                         isSelected
                                             ? Colors.white
-                                            : Colors.grey.shade800,
+                                            : Color(0xFF424242),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 selected: isSelected,
-                                selectedColor: Colors.orange.shade600,
+                                selectedColor: Color(0xFFD32F2F),
                                 backgroundColor: Colors.white,
                                 elevation: isSelected ? 4 : 1,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
+                                  side: BorderSide(
+                                    color: Color(0xFFD32F2F).withOpacity(0.3),
+                                  ),
                                 ),
                                 onSelected: (_) {
                                   setState(() => selectedIndex = index);
@@ -127,7 +139,7 @@ class _ProductPageState extends State<ProductPage> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 12,
                                 mainAxisSpacing: 14,
-                                childAspectRatio: 0.80,
+                                childAspectRatio: 0.75,
                               ),
                           itemCount: productVM.product.length,
                           itemBuilder: (context, index) {
@@ -147,12 +159,17 @@ class _ProductPageState extends State<ProductPage> {
                                           unit: product.unit.unitName,
                                           image: product.image,
                                           price: product.price,
+                                          stockQuatity: product.stockQty,
+                                          decoration: product.description as String,
                                         ),
                                   ),
                                 );
                               },
                               child: Card(
-                                elevation: 10,
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -162,7 +179,7 @@ class _ProductPageState extends State<ProductPage> {
                                         ClipRRect(
                                           borderRadius:
                                               const BorderRadius.vertical(
-                                                top: Radius.circular(18),
+                                                top: Radius.circular(12),
                                               ),
                                           child: Image.network(
                                             product.image,
@@ -180,11 +197,14 @@ class _ProductPageState extends State<ProductPage> {
                                           right: 10,
                                           child: CircleAvatar(
                                             backgroundColor: Colors.white,
+                                            radius: 20,
                                             child: IconButton(
+                                              padding: EdgeInsets.zero,
                                               onPressed: () {},
-                                              icon: Icon(
+                                              icon: const Icon(
                                                 Icons.favorite_border,
-                                                color: Colors.orange.shade600,
+                                                color: Color(0xFFD32F2F),
+                                                size: 22,
                                               ),
                                             ),
                                           ),
@@ -212,10 +232,10 @@ class _ProductPageState extends State<ProductPage> {
                                           const SizedBox(height: 8),
                                           Text(
                                             "${product.price} ກີບ",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
-                                              color: Colors.orange.shade600,
+                                              color: Color(0xFFD32F2F),
                                             ),
                                           ),
                                         ],

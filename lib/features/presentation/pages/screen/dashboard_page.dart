@@ -11,6 +11,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final productVM = context.watch<ProductViewModel>();
     return Scaffold(
+      backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +23,11 @@ class DashboardPage extends StatelessWidget {
                 children: [
                   const Text(
                     "ສິນຄ້າໂປຣໂມຊັນສຸດຄຸ້ມ",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF424242),
+                    ),
                   ),
                 ],
               ),
@@ -37,7 +42,7 @@ class DashboardPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Colors.grey.shade900,
+                  color: Color(0xFF424242),
                 ),
               ),
             ),
@@ -58,7 +63,7 @@ class DashboardPage extends StatelessWidget {
                               crossAxisCount: 2,
                               crossAxisSpacing: 12,
                               mainAxisSpacing: 14,
-                              childAspectRatio: 0.80,
+                              childAspectRatio: 0.75,
                             ),
                         itemCount: productVM.product.length,
                         itemBuilder: (context, index) {
@@ -77,12 +82,17 @@ class DashboardPage extends StatelessWidget {
                                         unit: product.unit.unitName,
                                         image: product.image,
                                         price: product.price,
-                                      ),
-                                ),
-                              );
+                                        stockQuatity: product.stockQty,
+                                        decoration:
+                                            product.description as String,
+                                      ),)
+                                );
                             },
                             child: Card(
-                              elevation: 10,
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -92,7 +102,7 @@ class DashboardPage extends StatelessWidget {
                                       ClipRRect(
                                         borderRadius:
                                             const BorderRadius.vertical(
-                                              top: Radius.circular(18),
+                                              top: Radius.circular(12),
                                             ),
                                         child: Image.network(
                                           product.image,
@@ -110,11 +120,14 @@ class DashboardPage extends StatelessWidget {
                                         right: 10,
                                         child: CircleAvatar(
                                           backgroundColor: Colors.white,
+                                          radius: 20,
                                           child: IconButton(
+                                            padding: EdgeInsets.zero,
                                             onPressed: () {},
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.favorite_border,
-                                              color: Colors.orange.shade600,
+                                              color: Color(0xFFD32F2F),
+                                              size: 22,
                                             ),
                                           ),
                                         ),
@@ -142,10 +155,10 @@ class DashboardPage extends StatelessWidget {
                                         const SizedBox(height: 8),
                                         Text(
                                           "${product.price} ກີບ",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.orange.shade600,
+                                            color: Color(0xFFD32F2F),
                                           ),
                                         ),
                                       ],

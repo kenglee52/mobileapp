@@ -24,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.grey.shade900, Colors.grey.shade700],
+            colors: [Color(0xFFD32F2F), Color(0xFFB71C1C)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -35,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
               padding: const EdgeInsets.all(20),
               child: Card(
                 elevation: 30,
+                shadowColor: Color(0xFFD32F2F).withOpacity(0.4),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(26),
                 ),
@@ -46,7 +47,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       /// 👤 Icon
                       CircleAvatar(
                         radius: 38,
-                        backgroundColor: Colors.orange.shade600,
+                        backgroundColor: Color(0xFFD32F2F),
                         child: const Icon(
                           Icons.person_add_alt_1,
                           size: 40,
@@ -62,6 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           fontSize: 26,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1,
+                          color: Color(0xFFD32F2F),
                         ),
                       ),
 
@@ -81,13 +83,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelText: "ຊື່",
                           prefixIcon: Icon(
                             Icons.person,
-                            color: Colors.orange.shade600,
+                            color: Color(0xFFD32F2F),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: Colors.grey.shade50,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F).withOpacity(0.3)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F), width: 2),
                           ),
                         ),
                       ),
@@ -102,13 +108,17 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelText: "ເບີໂທ",
                           prefixIcon: Icon(
                             Icons.phone,
-                            color: Colors.orange.shade600,
+                            color: Color(0xFFD32F2F),
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: Colors.grey.shade50,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F).withOpacity(0.3)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F), width: 2),
                           ),
                         ),
                       ),
@@ -123,23 +133,28 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelText: "ລະຫັດຜ່ານ",
                           prefixIcon: Icon(
                             Icons.lock,
-                            color: Colors.orange.shade600,
+                            color: Color(0xFFD32F2F),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _hidePassword
                                   ? Icons.visibility_off
                                   : Icons.visibility,
+                              color: Color(0xFFD32F2F),
                             ),
                             onPressed: () {
                               setState(() => _hidePassword = !_hidePassword);
                             },
                           ),
                           filled: true,
-                          fillColor: Colors.grey.shade100,
+                          fillColor: Colors.grey.shade50,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(14),
-                            borderSide: BorderSide(color: Colors.black),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F).withOpacity(0.3)),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFD32F2F), width: 2),
                           ),
                         ),
                       ),
@@ -152,7 +167,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         height: 52,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.orange.shade600,
+                            backgroundColor: Color(0xFFD32F2F),
+                            elevation: 4,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16),
                             ),
@@ -195,11 +211,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       /// 🔙 Back to Login
                       TextButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text(
+                        child: const Text(
                           "ມີບັນຊີແລ້ວ? ເຂົ້າສູ່ລະບົບ",
                           style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontWeight: FontWeight.w500,
+                            color: Color(0xFFD32F2F),
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
