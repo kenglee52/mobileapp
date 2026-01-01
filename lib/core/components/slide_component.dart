@@ -65,7 +65,7 @@ class _SlideComponentState extends State<SlideComponent> {
             );
           }).toList(),
           options: CarouselOptions(
-            height: MediaQuery.of(context).size.height * 0.2,
+            height: MediaQuery.of(context).size.height * 0.17,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 3),
             enlargeCenterPage: true,

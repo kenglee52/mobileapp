@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/features/presentation/pages/cart_page.dart';
+import 'package:mobileapp/features/presentation/pages/login_page.dart';
 import 'package:mobileapp/features/presentation/pages/screen/dashboard_page.dart';
 import 'package:mobileapp/features/presentation/pages/screen/favorite_page.dart';
 import 'package:mobileapp/features/presentation/pages/screen/product_page.dart';
@@ -57,7 +58,7 @@ class _HomePageState extends State<HomePage> {
           ),
           iconTheme: const IconThemeData(color: Colors.white),
           title: const Text(
-            "MyApp",
+            "LAO SHOP",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -81,7 +82,15 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.redAccent,
                         ),
                         title: const Text("ອອກຈາກລະບົບ"),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
