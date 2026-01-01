@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/features/data/datasources/bill_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/category_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/customer_remote_datasource.dart';
+import 'package:mobileapp/features/data/datasources/order_remote_datasource.dart';
 import 'package:mobileapp/features/data/datasources/product_remote_datasource.dart';
 import 'package:mobileapp/features/data/repositories/bill_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/category_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/customer_repository_impl.dart';
+import 'package:mobileapp/features/data/repositories/order_repository_impl.dart';
 import 'package:mobileapp/features/data/repositories/product_repository_impl.dart';
 import 'package:mobileapp/features/domain/usecases/bill/create_bill.dart';
 import 'package:mobileapp/features/domain/usecases/bill/delete_bill.dart';
@@ -22,6 +24,11 @@ import 'package:mobileapp/features/domain/usecases/customer/delete_customer.dart
 import 'package:mobileapp/features/domain/usecases/customer/get_customer_by_id.dart';
 import 'package:mobileapp/features/domain/usecases/customer/get_customers.dart';
 import 'package:mobileapp/features/domain/usecases/customer/update_customer.dart';
+import 'package:mobileapp/features/domain/usecases/order/create_order.dart';
+import 'package:mobileapp/features/domain/usecases/order/delete_order.dart';
+import 'package:mobileapp/features/domain/usecases/order/get_order_by_id.dart';
+import 'package:mobileapp/features/domain/usecases/order/get_orders.dart';
+import 'package:mobileapp/features/domain/usecases/order/update_order.dart';
 import 'package:mobileapp/features/domain/usecases/product/create_product.dart';
 import 'package:mobileapp/features/domain/usecases/product/delete_product.dart';
 import 'package:mobileapp/features/domain/usecases/product/get_product_by_id.dart';
@@ -31,6 +38,7 @@ import 'package:mobileapp/features/presentation/pages/login_page.dart';
 import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/category_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/customer_view_model.dart';
+import 'package:mobileapp/features/presentation/viewmodels/order_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -46,6 +54,9 @@ void main() {
 
   final billRemote = BillRemoteDatasource();
   final billRepo = BillRepositoryImpl(billRemote);
+
+  final orderRemote = OrderRemoteDatasource();
+  final orderRepo = OrderRepositoryImpl(orderRemote);
 
   runApp(
     MultiProvider(
@@ -88,7 +99,17 @@ void main() {
                 updateBillUsecase: UpdateBill(billRepo),
                 deleteBillUsecase: DeleteBill(billRepo),
                 getBillByIdUsecase: GetBillById(billRepo),
-              ),
+              )..loadBills(),
+        ),
+        ChangeNotifierProvider(
+          create:
+              (_) => OrderViewModel(
+                getOrdersUsecase: GetOrders(orderRepo),
+                createOrderUsecase: CreateOrder(orderRepo),
+                updateOrderUsecase: UpdateOrder(orderRepo),
+                deleteOrderUsecase: DeleteOrder(orderRepo),
+                getOrderByIdUsecase: GetOrderById(orderRepo),
+              )..loadOrders(),
         ),
       ],
       child: const MyApp(),

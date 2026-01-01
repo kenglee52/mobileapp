@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/controllers/add_to_cart.dart';
+import 'package:mobileapp/features/data/datasources/bill_remote_datasource.dart';
+import 'package:mobileapp/features/domain/entities/bill.dart';
+import 'package:mobileapp/features/domain/entities/order.dart';
+import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
+import 'package:mobileapp/features/presentation/viewmodels/order_view_model.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  final int customerID;
+  const CartPage({super.key, required this.customerID});
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -29,6 +36,8 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final billVM = context.watch<BillViewModel>();
+    final orderVM = context.watch<OrderViewModel>();
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
@@ -166,11 +175,136 @@ class _CartPageState extends State<CartPage> {
                         /// Checkout Button
                         ElevatedButton(
                           onPressed: () {
-                            // TODO: implement payment or checkout
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text("ກຳລັງເປີດໜ້າຊຳລະເງິນ..."),
-                              ),
+                            String? transportType;
+                            final TextEditingController branchController =
+                                TextEditingController();
+
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  title: Center(
+                                    child: Text(
+                                      "ກະລຸນາໃສ່ຂໍ້ມູນ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ),
+                                  content: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        /// Dropdown ประเภทขนส่ง
+                                        DropdownButtonFormField<String>(
+                                          value: transportType,
+                                          decoration: InputDecoration(
+                                            labelText: "ປະເພດຂົນສົ່ງ",
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            prefixIcon: Icon(
+                                              Icons.local_shipping,
+                                            ),
+                                          ),
+                                          items: const [
+                                            DropdownMenuItem(
+                                              value: "ອະນຸສິດ",
+                                              child: Text("ອະນຸສິດ"),
+                                            ),
+                                            DropdownMenuItem(
+                                              value: "ມີໄຊ",
+                                              child: Text("ມີໄຊ"),
+                                            ),
+                                          ],
+                                          onChanged: (value) {
+                                            transportType = value;
+                                          },
+                                        ),
+
+                                        const SizedBox(height: 16),
+
+                                        /// TextField ชื่อสาขา
+                                        TextFormField(
+                                          controller: branchController,
+                                          decoration: InputDecoration(
+                                            labelText: "ສາຂາຂົນສົ່ງ",
+                                            hintText: "ປ້ອນຊື່ສາຂາ",
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                            prefixIcon: Icon(Icons.store),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        "ຍົກເລີກ",
+                                        style: TextStyle(color: Colors.grey),
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                        ),
+                                      ),
+                                      onPressed: () async {
+                                        await billVM.addBill(
+                                          Bill(
+                                            billID: null,
+                                            customerID: widget.customerID,
+                                            logistictType:
+                                                transportType.toString(),
+                                            logisticName: branchController.text,
+                                            billdate: null,
+                                            send: null,
+                                          ),
+                                        );
+                                        int BillId = BillRemoteDatasource.id;
+                                        print(BillId);
+
+                                        for (var item in cart) {
+                                          await orderVM.addOrder(
+                                            Order(
+                                              orderID: null,
+                                              billID: BillId,
+                                              productID: item["id"],
+                                              saleQty: item["qty"],
+                                              total: item["total"],
+                                            ),
+                                          );
+                                        }
+
+                                        setState(() {
+                                          AddToCart.productCart = [];
+                                          cart = AddToCart.productCart;
+                                          sum = AddToCart.getSumPrice();
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("ບັນທຶກ"),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
                           },
                           style: ElevatedButton.styleFrom(
@@ -188,14 +322,10 @@ class _CartPageState extends State<CartPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.payment,
-                                  size: 20,
-                                  color: Colors.white,
-                                ),
+                                Icon(Icons.save, size: 20, color: Colors.white),
                                 SizedBox(width: 5),
                                 Text(
-                                  "ຊຳລະເງິນ",
+                                  "ບັນທຶກການສັ່ງຊື້",
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,

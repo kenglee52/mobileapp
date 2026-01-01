@@ -101,7 +101,9 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CartPage()),
+            MaterialPageRoute(
+              builder: (context) => CartPage(customerID: widget.userID),
+            ),
           );
         },
         child: const Icon(Icons.shopping_cart, color: Colors.white),
@@ -111,10 +113,10 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-                colors: [Colors.grey.shade900, Colors.grey.shade700],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            colors: [Colors.grey.shade900, Colors.grey.shade700],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(28),
             topRight: Radius.circular(28),
