@@ -93,8 +93,6 @@ class _HomePageState extends State<HomePage> {
         duration: const Duration(milliseconds: 300),
         child: screens[_selectedIndex],
       ),
-
-      /// 🛒 Floating Cart
       floatingActionButton: FloatingActionButton(
         elevation: 8,
         backgroundColor: Colors.grey.shade800,
@@ -126,7 +124,6 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         child: SizedBox(
-          height: 60,
           child: BottomNavigationBar(
             backgroundColor: Colors.transparent,
             elevation: 0,

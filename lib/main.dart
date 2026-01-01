@@ -125,6 +125,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'E-commerce',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: "NotoSansLao"
+      ),
       home: const LoginPage(),
     );
   }
