@@ -18,7 +18,6 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     final categoryVM = context.watch<CategoryViewModel>();
     final productVM = context.watch<ProductViewModel>();
-
     final categories = [
       {"categoryName": "ທັງໝົດ"},
       ...categoryVM.category.map((e) => {"categoryName": e.categoryName}),
@@ -128,7 +127,7 @@ class _ProductPageState extends State<ProductPage> {
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 12,
                                 mainAxisSpacing: 14,
-                                childAspectRatio: 0.68,
+                                childAspectRatio: 0.80,
                               ),
                           itemCount: productVM.product.length,
                           itemBuilder: (context, index) {
@@ -171,7 +170,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 MediaQuery.sizeOf(
                                                   context,
                                                 ).height *
-                                                0.18,
+                                                0.16,
                                             width: double.infinity,
                                             fit: BoxFit.fill,
                                           ),
