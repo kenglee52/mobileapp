@@ -164,9 +164,9 @@ class _ProductPageState extends State<ProductPage> {
                                           categoryID: product.categoryID,
                                           unitID: product.unitID,
                                           importPrice: product.importPrice,
-                                          manufacture: product.manufature as String,
-                                          expiry: product.expiry as String,
-                                          description: product.description as String,
+                                          manufacture: product.manufature ?? "",
+                                          expiry: product.expiry ?? "",
+                                          description: product.description ?? "",
                                         ),
                                   ),
                                 );

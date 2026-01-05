@@ -3,8 +3,10 @@ import 'package:mobileapp/controllers/add_to_cart.dart';
 import 'package:mobileapp/features/data/datasources/bill_remote_datasource.dart';
 import 'package:mobileapp/features/domain/entities/bill.dart';
 import 'package:mobileapp/features/domain/entities/order.dart';
+import 'package:mobileapp/features/domain/entities/product.dart';
 import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/order_view_model.dart';
+import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -38,6 +40,7 @@ class _CartPageState extends State<CartPage> {
   Widget build(BuildContext context) {
     final billVM = context.watch<BillViewModel>();
     final orderVM = context.watch<OrderViewModel>();
+    final productVM = context.watch<ProductViewModel>();
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       appBar: AppBar(
@@ -294,7 +297,9 @@ class _CartPageState extends State<CartPage> {
                                               saleQty: item["qty"],
                                               total: item["total"],
                                             ),
-                                          );                            
+                                          );
+                                          // int newQtyInStock = item["stock"] - item["qty"];
+                                          // await productVM.editProduct(Product(productID: item["id"], productName: item["name"], categoryID: item["categoryID"], unitID: item["unitID"], stockQty: newQtyInStock, price: item["price"], image: item["image"], importPrice: item["importPrice"], manufature: item["manufature"] ?? "", expiry: item["expiry"] ?? "", description: item["description"] ?? "", category: category, unit: unit));
                                         }
                                         setState(() {
                                           AddToCart.productCart = [];
