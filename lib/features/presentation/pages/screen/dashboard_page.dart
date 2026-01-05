@@ -85,8 +85,17 @@ class DashboardPage extends StatelessWidget {
                                         stockQuatity: product.stockQty,
                                         decoration:
                                             product.description as String,
-                                      ),)
-                                );
+                                        categoryID: product.categoryID,
+                                        unitID: product.unitID,
+                                        importPrice: product.importPrice,
+                                        manufacture:
+                                            product.manufature as String,
+                                        expiry: product.expiry as String,
+                                        description:
+                                            product.description as String,
+                                      ),
+                                ),
+                              );
                             },
                             child: Card(
                               elevation: 2,

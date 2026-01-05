@@ -77,7 +77,6 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      /// 🛒 Logo
                       CircleAvatar(
                         radius: 35,
                         backgroundColor: Color(0xFFD32F2F),
@@ -104,10 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                         "ເຂົ້າສູ່ລະບົບເພື່ອຊື້ສິນຄ້າ",
                         style: TextStyle(color: Colors.grey.shade600),
                       ),
-
                       const SizedBox(height: 30),
-
-                      /// 📞 Tel
                       TextField(
                         controller: _telController,
                         keyboardType: TextInputType.phone,
@@ -165,10 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 28),
-
-                      /// 🔘 Login Button
                       SizedBox(
                         width: double.infinity,
                         height: 52,

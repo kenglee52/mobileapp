@@ -10,6 +10,12 @@ class ProductDetailPage extends StatefulWidget {
   final int price;
   final int stockQuatity;
   final String decoration;
+  final int categoryID;
+  final int unitID;
+  final int importPrice;
+  final String manufacture;
+  final String expiry;
+  final String description;
 
   const ProductDetailPage({
     super.key,
@@ -21,6 +27,12 @@ class ProductDetailPage extends StatefulWidget {
     required this.price,
     required this.stockQuatity,
     required this.decoration,
+    required this.categoryID,
+    required this.unitID,
+    required this.importPrice,
+    required this.manufacture,
+    required this.expiry,
+    required this.description,
   });
 
   @override
@@ -93,6 +105,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               total,
               widget.image,
               widget.stockQuatity,
+              widget.categoryID,
+              widget.unitID,
+              widget.importPrice,
+              widget.manufacture,
+              widget.expiry,
+              widget.decoration,
             );
           },
           child: Container(
