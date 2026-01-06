@@ -61,7 +61,7 @@ class ProductRemoteDatasource {
 
   Future<ProductModel?> getProductById(int id) async {
     try {
-      final response = await http.delete(Uri.parse(url + "/${id}"));
+      final response = await http.get(Uri.parse(url + "/${id}"));
       if (response.statusCode == 200) {
         final data = await jsonDecode(response.body);
         return ProductModel.fromJson(data);

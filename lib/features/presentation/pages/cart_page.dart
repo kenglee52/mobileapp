@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mobileapp/controllers/add_to_cart.dart';
 import 'package:mobileapp/features/data/datasources/bill_remote_datasource.dart';
 import 'package:mobileapp/features/domain/entities/bill.dart';
+import 'package:mobileapp/features/domain/entities/category.dart';
 import 'package:mobileapp/features/domain/entities/order.dart';
 import 'package:mobileapp/features/domain/entities/product.dart';
+import 'package:mobileapp/features/domain/entities/unit.dart';
 import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/order_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
@@ -298,8 +300,44 @@ class _CartPageState extends State<CartPage> {
                                               total: item["total"],
                                             ),
                                           );
-                                          // int newQtyInStock = item["stock"] - item["qty"];
-                                          // await productVM.editProduct(Product(productID: item["id"], productName: item["name"], categoryID: item["categoryID"], unitID: item["unitID"], stockQty: newQtyInStock, price: item["price"], image: item["image"], importPrice: item["importPrice"], manufature: item["manufature"] ?? "", expiry: item["expiry"] ?? "", description: item["description"] ?? "", category: category, unit: unit));
+                                          Product? fullProduct;
+                                          try {
+                                            fullProduct = productVM.product.firstWhere(
+                                              (p) => p.productID == item["id"],
+                                            );
+                                          } catch (e) {
+                                            fullProduct = Product(
+                                              productID: item["id"],
+                                              productName: item["name"],
+                                              categoryID: item["categoryID"],
+                                              unitID: item["unitID"],
+                                              stockQty: item["stock"],
+                                              price: item["price"],
+                                              image: item["image"],
+                                              importPrice: item["importPrice"],
+                                              manufature: item["manufature"],
+                                              expiry: item["expiry"],
+                                              description: item["description"],
+                                              category: Category(categoryID: item["categoryID"], categoryName: ""),
+                                              unit: Unit(unitID: item["unitID"], unitName: ""),
+                                            );
+                                          }
+                                          int newQtyInStock = item["stock"] - item["qty"];
+                                          await productVM.editProduct(Product(
+                                            productID: item["id"],
+                                            productName: fullProduct.productName,
+                                            categoryID: fullProduct.categoryID,
+                                            unitID: fullProduct.unitID,
+                                            stockQty: newQtyInStock,
+                                            price: fullProduct.price,
+                                            image: fullProduct.image,
+                                            importPrice: fullProduct.importPrice,
+                                            manufature: fullProduct.manufature,
+                                            expiry: fullProduct.expiry,
+                                            description: fullProduct.description,
+                                            category: fullProduct.category,
+                                            unit: fullProduct.unit,
+                                          ));
                                         }
                                         setState(() {
                                           AddToCart.productCart = [];

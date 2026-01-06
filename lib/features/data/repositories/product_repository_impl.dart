@@ -19,7 +19,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<void> updateProduct(Product product) {
     final model = ProductModel.fromEntity(product);
-    return remote.createProduct(model);
+    return remote.updateProduct(model);
   }
 
   @override
