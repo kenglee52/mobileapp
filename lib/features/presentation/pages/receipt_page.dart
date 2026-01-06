@@ -156,9 +156,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                         );
                       },
                     ),
-
                     const Divider(thickness: 1.2),
-
                     /// ===== TOTAL =====
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,9 +182,7 @@ class _ReceiptPageState extends State<ReceiptPage> {
                 ),
               ),
             ),
-
             const Spacer(),
-
             /// ===== CONFIRM BUTTON =====
             SizedBox(
               width: double.infinity,
