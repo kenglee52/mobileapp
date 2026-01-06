@@ -21,13 +21,48 @@ class ProductViewModel extends ChangeNotifier {
   });
 
   List<Product> product = [];
+  List<Product> filteredProducts = [];
   bool isLoading = true;
+  String searchQuery = "";
+  String? selectedCategory;
 
   Future<void> loadProducts() async {
     isLoading = true;
     notifyListeners();
     product = await getProductsUsecase();
+    filteredProducts = product;
     isLoading = false;
+    notifyListeners();
+  }
+
+  void searchProducts(String query, {String? categoryFilter}) {
+    searchQuery = query;
+    if (categoryFilter != null) {
+      selectedCategory = categoryFilter;
+    }
+    _applyFilters();
+  }
+
+  void filterByCategory(String? categoryName) {
+    selectedCategory = categoryName;
+    _applyFilters();
+  }
+
+  void _applyFilters() {
+    filteredProducts = product.where((p) {
+      // Filter by search query (name, unit, or category)
+      bool matchesQuery = searchQuery.isEmpty ||
+          p.productName.toLowerCase().contains(searchQuery.toLowerCase()) ||
+          p.unit.unitName.toLowerCase().contains(searchQuery.toLowerCase()) ||
+          p.category.categoryName.toLowerCase().contains(searchQuery.toLowerCase());
+
+      // Filter by category
+      bool matchesCategory = selectedCategory == null ||
+          selectedCategory == "ທັງໝົດ" ||
+          p.category.categoryName == selectedCategory;
+
+      return matchesQuery && matchesCategory;
+    }).toList();
     notifyListeners();
   }
 

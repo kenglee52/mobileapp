@@ -264,7 +264,7 @@ class _CartPageState extends State<CartPage> {
                                       },
                                       child: const Text(
                                         "ຍົກເລີກ",
-                                        style: TextStyle(color: Colors.grey),
+                                        style: TextStyle(color: Colors.blueGrey),
                                       ),
                                     ),
                                     ElevatedButton(
@@ -395,7 +395,10 @@ class _CartPageState extends State<CartPage> {
                                               ),
                                         );
                                       },
-                                      child: const Text("ບັນທຶກ"),
+                                      child: const Text(
+                                        "ບັນທຶກ",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ],
                                 );

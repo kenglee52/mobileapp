@@ -12,7 +12,14 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  TextEditingController searchController = TextEditingController();
   int selectedIndex = 0;
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +51,16 @@ class _ProductPageState extends State<ProductPage> {
                   ],
                 ),
                 child: TextField(
+                  controller: searchController,
+                  onChanged: (value) {
+                    final categoryName = selectedIndex == 0
+                        ? "ທັງໝົດ"
+                        : categoryVM.category[selectedIndex - 1].categoryName;
+                    context.read<ProductViewModel>().searchProducts(
+                          value,
+                          categoryFilter: categoryName,
+                        );
+                  },
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search, color: Color(0xFFD32F2F)),
                     hintText: "ຄົ້ນຫາສິນຄ້າ",
@@ -107,16 +124,19 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                                 onSelected: (_) {
                                   setState(() => selectedIndex = index);
+                                  final categoryName = index == 0
+                                      ? "ທັງໝົດ"
+                                      : categoryVM.category[index - 1].categoryName;
+                                  context.read<ProductViewModel>().filterByCategory(
+                                        categoryName,
+                                      );
                                 },
                               ),
                             );
                           },
                         ),
               ),
-
               const SizedBox(height: 24),
-
-              /// 🛍 Products
               const Text(
                 "ສິນຄ້າແນະນຳ",
                 style: TextStyle(
@@ -132,18 +152,21 @@ class _ProductPageState extends State<ProductPage> {
                 child:
                     productVM.isLoading
                         ? const Center(child: Text("ກຳລັງໂຫລດສິນຄ້າ..."))
-                        : GridView.builder(
-                          padding: const EdgeInsets.only(bottom: 16),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 14,
-                                childAspectRatio: 0.75,
-                              ),
-                          itemCount: productVM.product.length,
-                          itemBuilder: (context, index) {
-                            final product = productVM.product[index];
+                        : productVM.filteredProducts.isEmpty
+                            ? const Center(
+                                child: Text("ບໍ່ມີສິນຄ້າທີ່ຕົງກັນ"))
+                            : GridView.builder(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    crossAxisSpacing: 12,
+                                    mainAxisSpacing: 14,
+                                    childAspectRatio: 0.75,
+                                  ),
+                              itemCount: productVM.filteredProducts.length,
+                              itemBuilder: (context, index) {
+                                final product = productVM.filteredProducts[index];
 
                             return GestureDetector(
                               onTap: () {
