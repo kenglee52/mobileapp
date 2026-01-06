@@ -6,6 +6,7 @@ import 'package:mobileapp/features/domain/entities/category.dart';
 import 'package:mobileapp/features/domain/entities/order.dart';
 import 'package:mobileapp/features/domain/entities/product.dart';
 import 'package:mobileapp/features/domain/entities/unit.dart';
+import 'package:mobileapp/features/presentation/pages/receipt_page.dart';
 import 'package:mobileapp/features/presentation/viewmodels/bill_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/order_view_model.dart';
 import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
@@ -302,9 +303,11 @@ class _CartPageState extends State<CartPage> {
                                           );
                                           Product? fullProduct;
                                           try {
-                                            fullProduct = productVM.product.firstWhere(
-                                              (p) => p.productID == item["id"],
-                                            );
+                                            fullProduct = productVM.product
+                                                .firstWhere(
+                                                  (p) =>
+                                                      p.productID == item["id"],
+                                                );
                                           } catch (e) {
                                             fullProduct = Product(
                                               productID: item["id"],
@@ -318,33 +321,79 @@ class _CartPageState extends State<CartPage> {
                                               manufature: item["manufature"],
                                               expiry: item["expiry"],
                                               description: item["description"],
-                                              category: Category(categoryID: item["categoryID"], categoryName: ""),
-                                              unit: Unit(unitID: item["unitID"], unitName: ""),
+                                              category: Category(
+                                                categoryID: item["categoryID"],
+                                                categoryName: "",
+                                              ),
+                                              unit: Unit(
+                                                unitID: item["unitID"],
+                                                unitName: "",
+                                              ),
                                             );
                                           }
-                                          int newQtyInStock = item["stock"] - item["qty"];
-                                          await productVM.editProduct(Product(
-                                            productID: item["id"],
-                                            productName: fullProduct.productName,
-                                            categoryID: fullProduct.categoryID,
-                                            unitID: fullProduct.unitID,
-                                            stockQty: newQtyInStock,
-                                            price: fullProduct.price,
-                                            image: fullProduct.image,
-                                            importPrice: fullProduct.importPrice,
-                                            manufature: fullProduct.manufature,
-                                            expiry: fullProduct.expiry,
-                                            description: fullProduct.description,
-                                            category: fullProduct.category,
-                                            unit: fullProduct.unit,
-                                          ));
+                                          int newQtyInStock =
+                                              item["stock"] - item["qty"];
+                                          await productVM.editProduct(
+                                            Product(
+                                              productID: item["id"],
+                                              productName:
+                                                  fullProduct.productName,
+                                              categoryID:
+                                                  fullProduct.categoryID,
+                                              unitID: fullProduct.unitID,
+                                              stockQty: newQtyInStock,
+                                              price: fullProduct.price,
+                                              image: fullProduct.image,
+                                              importPrice:
+                                                  fullProduct.importPrice,
+                                              manufature:
+                                                  fullProduct.manufature,
+                                              expiry: fullProduct.expiry,
+                                              description:
+                                                  fullProduct.description,
+                                              category: fullProduct.category,
+                                              unit: fullProduct.unit,
+                                            ),
+                                          );
                                         }
-                                        setState(() {
-                                          AddToCart.productCart = [];
-                                          cart = AddToCart.productCart;
-                                          sum = AddToCart.getSumPrice();
-                                        });
                                         Navigator.pop(context);
+                                        showDialog(
+                                          context: context,
+                                          builder:
+                                              (context) => AlertDialog(
+                                                title: Container(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "ສຳເລັດການສັ່ງສື້",
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                      Navigator.pop(context);
+                                                      // Navigator.pop(context);
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder:
+                                                              (
+                                                                context,
+                                                              ) => ReceiptPage(
+                                                                id: BillId,
+                                                                customerId:
+                                                                    widget
+                                                                        .customerID,
+                                                              ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Text("ຕົກລົງ"),
+                                                  ),
+                                                ],
+                                              ),
+                                        );
                                       },
                                       child: const Text("ບັນທຶກ"),
                                     ),

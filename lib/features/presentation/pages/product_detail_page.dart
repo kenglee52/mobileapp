@@ -112,6 +112,24 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               widget.expiry,
               widget.decoration,
             );
+            showDialog(
+              context: context,
+              builder:
+                  (context) => AlertDialog(
+                    title: Container(
+                      alignment: Alignment.center,
+                      child: Text("ເພີ່ມໃສ່ກະຕ່າແລ້ວ"),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text("ຕົກລົງ"),
+                      ),
+                    ],
+                  ),
+            );
           },
           child: Container(
             height: 26,
