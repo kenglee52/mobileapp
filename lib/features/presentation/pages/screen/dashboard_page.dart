@@ -1,15 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/core/components/slide_component.dart';
 import 'package:mobileapp/features/presentation/pages/product_detail_page.dart';
-import 'package:mobileapp/features/presentation/viewmodels/product_view_model.dart';
-import 'package:provider/provider.dart';
+import 'package:mobileapp/reports/report.dart';
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+  List<Map<String, dynamic>> products = [];
+  @override
+  void initState() {
+    super.initState();
+    loadBestProduct();
+  }
+
+  Future<void> loadBestProduct() async {
+    await Report.fetchBestProduct();
+    setState(() {
+      products = Report.bestProduct;
+    });
+  }
+
   Widget build(BuildContext context) {
-    final productVM = context.watch<ProductViewModel>();
     return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
       body: SafeArea(
@@ -50,7 +66,7 @@ class DashboardPage extends StatelessWidget {
             const SizedBox(height: 12),
             Expanded(
               child:
-                  productVM.isLoading
+                  products.isEmpty
                       ? const Center(child: Text("ກຳລັງໂຫລດສິນຄ້າ..."))
                       : GridView.builder(
                         padding: const EdgeInsets.only(
@@ -65,9 +81,9 @@ class DashboardPage extends StatelessWidget {
                               mainAxisSpacing: 14,
                               childAspectRatio: 0.75,
                             ),
-                        itemCount: productVM.product.length,
+                        itemCount: products.length,
                         itemBuilder: (context, index) {
-                          final product = productVM.product[index];
+                          final product = products[index];
 
                           return GestureDetector(
                             onTap: () {
@@ -76,21 +92,23 @@ class DashboardPage extends StatelessWidget {
                                 MaterialPageRoute(
                                   builder:
                                       (_) => ProductDetailPage(
-                                        id: product.productID as int,
-                                        name: product.productName,
-                                        category: product.category.categoryName,
-                                        unit: product.unit.unitName,
-                                        image: product.image,
-                                        price: product.price,
-                                        stockQuatity: product.stockQty,
+                                        id: product["productID"] as int,
+                                        name: product["productName"],
+                                        category: product["category"],
+                                        unit: product["unit"],
+                                        image: product["image"],
+                                        price: product["price"],
+                                        stockQuatity: product["stockQty"],
                                         decoration:
-                                            product.description as String,
-                                        categoryID: product.categoryID,
-                                        unitID: product.unitID,
-                                        importPrice: product.importPrice,
-                                           manufacture: product.manufature ?? "",
-                                          expiry: product.expiry ?? "",
-                                          description: product.description ?? ""
+                                            product["description"] as String,
+                                        categoryID: product["categoryID"],
+                                        unitID: product["unitID"],
+                                        importPrice: product["importPrice"],
+                                        manufacture:
+                                            product["manufacture"] ?? "",
+                                        expiry: product["expiry"] ?? "",
+                                        description:
+                                            product["description"] ?? "",
                                       ),
                                 ),
                               );
@@ -112,7 +130,7 @@ class DashboardPage extends StatelessWidget {
                                               top: Radius.circular(12),
                                             ),
                                         child: Image.network(
-                                          product.image,
+                                          product["image"],
                                           height:
                                               MediaQuery.sizeOf(
                                                 context,
@@ -150,7 +168,7 @@ class DashboardPage extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          product.productName,
+                                          product["productName"],
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
@@ -161,7 +179,7 @@ class DashboardPage extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
-                                          "${product.price} ກີບ",
+                                          "${product["price"]} ກີບ",
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
