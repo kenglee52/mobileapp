@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 
 class Report {
   static List<Map<String, dynamic>> bestProduct = [];
+  static List<Map<String, dynamic>> bill = [];
+  bool isloading = true;
   static final String url = Api.baseUrl + "/report";
 
   static Future<void> fetchBestProduct() async {
@@ -22,6 +24,18 @@ class Report {
       }
     } catch (e) {
       print("Exception: $e");
+    }
+  }
+
+  static Future<void> fetchBill(int id) async {
+    try {
+      final response = await http.get(Uri.parse("${url}/online_bill/${id}"));
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = await jsonDecode(response.body);
+        bill = responseData.map((e) => Map<String, dynamic>.from(e)).toList();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

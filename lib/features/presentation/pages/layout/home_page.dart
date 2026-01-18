@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobileapp/features/presentation/pages/cart_page.dart';
+import 'package:mobileapp/features/presentation/pages/history_page.dart';
 import 'package:mobileapp/features/presentation/pages/login_page.dart';
 import 'package:mobileapp/features/presentation/pages/screen/dashboard_page.dart';
 import 'package:mobileapp/features/presentation/pages/screen/favorite_page.dart';
@@ -46,8 +47,15 @@ class _HomePageState extends State<HomePage> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.message, color: Colors.white),
-              onPressed: () {},
+              icon: const Icon(Icons.receipt_long, color: Colors.white),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HistoryPage(id: widget.userID),
+                  ),
+                );
+              },
             ),
             PopupMenuButton(
               icon: const Icon(Icons.more_vert, color: Colors.white),
