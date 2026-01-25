@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapp/features/presentation/pages/order_history_page.dart';
 import 'package:mobileapp/reports/report.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -16,7 +17,6 @@ class _HistoryPageState extends State<HistoryPage> {
     setState(() {
       data = Report.bill;
     });
-    print(data);
   }
 
   @override
@@ -43,6 +43,16 @@ class _HistoryPageState extends State<HistoryPage> {
             return Card(
               elevation: 5,
               child: ListTile(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) =>
+                              OrderHistoryPage(id: item["onlineBillID"]),
+                    ),
+                  );
+                },
                 title: Row(
                   children: [
                     Text(
